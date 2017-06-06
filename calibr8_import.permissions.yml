@@ -1,0 +1,7 @@
+'access import':
+  title: 'Access the importer'
+  description: 'Allow to force start the import.'
+
+'configure import':
+  title: 'Configure import'
+  description: 'Configure import settings.'

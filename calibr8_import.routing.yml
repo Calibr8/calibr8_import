@@ -1,0 +1,15 @@
+calibr8_import.import:
+  path: '/admin/content/import'
+  defaults:
+    _form: '\Drupal\calibr8_import\Form\ImportForm'
+    _title: 'Import'
+  requirements:
+    _permission: 'access import'
+
+calibr8_import.settings:
+  path: '/admin/config/calibr8/import'
+  defaults:
+    _form: '\Drupal\calibr8_import\Form\SettingsForm'
+    _title: 'Importer settings'
+  requirements:
+    _permission: 'configure import'

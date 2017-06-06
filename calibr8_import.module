@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * Implements hook_mail().
+ */
+function calibr8_import_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'import_error_notifier':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['body'][] = $params['message'];
+      break;
+  }
+}
+
+/**************************************************
+ * Helper functions
+ *************************************************/
+
+/**
+ * Provide a base schema for our import tables.
+ *
+ * @param $type
+ * @param $other_columns
+ * @return array
+ */
+function calibr8_import_create_base_schema($type, $other_columns = array(), $primary_key = array()) {
+  $schema = array(
+    'description' => "The {$type} import table.",
+    'fields' => array(
+      'id' => array(
+        'description' => "The {$type} primary identifier.",
+        'type' => 'varchar',
+        'length' => 16,
+        'not null' => TRUE,
+      ),
+      // $other_columns will be added here.
+      'data' => array(
+        'description' => "The entire imported row serialized.",
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'description' => "When the {$type} imported row was created.",
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+      'changed' => array(
+        'description' => "When the {$type} imported row was updated.",
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+      'last_import' => array(
+        'description' => "When the {$type} imported row was last included in the import.",
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+      'deleted' => array(
+        'description' => "The {$type} imported row is no longer present in the import.",
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0
+      ),
+      'sha' => array(
+        'description' => "The hashed serialized {$type} imorted row.",
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  // Add the $other_columns between id and data.
+  if(!empty($other_columns)) {
+    _array_splice_assoc($schema['fields'], 1, 0, $other_columns);
+  }
+
+  // Change primary key if needed.
+  if(!empty($primary_key)) {
+    $schema['primary key'] = $primary_key;
+  }
+
+  return $schema;
+
+}
+
+/**
+ * Helper function
+ */
+function _array_splice_assoc(&$input, $offset, $length, $replacement) {
+  $replacement = (array)$replacement;
+  $key_indices = array_flip(array_keys($input));
+  if (isset($input[$offset]) && is_string($offset)) {
+    $offset = $key_indices[$offset];
+  }
+  if (isset($input[$length]) && is_string($length)) {
+    $length = $key_indices[$length] - $offset;
+  }
+
+  $input = array_slice($input, 0, $offset, TRUE)
+    + $replacement
+    + array_slice($input, $offset + $length, NULL, TRUE);
+}

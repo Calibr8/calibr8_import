@@ -1,0 +1,4 @@
+calibr8_import.import:
+  route_name: calibr8_import.import
+  title: Import
+  base_route: system.admin_content

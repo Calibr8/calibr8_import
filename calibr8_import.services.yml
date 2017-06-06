@@ -1,0 +1,4 @@
+services:
+  plugin.manager.calibr8_importer:
+    class: Drupal\calibr8_import\Plugin\Calibr8ImporterManager
+    parent: default_plugin_manager

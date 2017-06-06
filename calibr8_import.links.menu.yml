@@ -1,0 +1,11 @@
+calibr8_import.settings:
+  title: 'Import settings'
+  description: 'Manage import settings'
+  parent: system.admin_config_development
+  route_name: 'calibr8_import.settings'
+calibr8_import.import:
+  title: 'Import'
+  description: 'Start and configure imports'
+  parent: system.admin_content
+  weight: 99
+  route_name: 'calibr8_import.import'

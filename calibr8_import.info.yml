@@ -1,0 +1,8 @@
+name: Calibr8 Importer
+description: Base module for writing imports
+package: Calibrate
+configure: calibr8_import.settings
+#dependencies:
+#  - calibr8_admin
+type: module
+core: 8.x

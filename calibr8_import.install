@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * Implements HOOK_install().
+ */
+function calibr8_import_install() {
+
+}
+
+/**
+ * Implements HOOK_schema().
+ */
+function calibr8_import_schema() {
+  $schema = array();
+
+  /**
+   * Default information will be imported into the data cell
+   * Other information that needs to be queried, can be added to other columns
+   * Example:
+   *   $other_columns = array(
+   *     'email' => array(
+   *       'description' => 'Example import: name',
+   *       'type' => 'varchar',
+   *       'length' => 64,
+   *       'not null' => TRUE,
+   *     ),
+   *   );
+   *   $schema['calibr8_import_default'] = calibr8_import_create_base_schema('default', $other_columns);
+   */
+
+  return $schema;
+}
